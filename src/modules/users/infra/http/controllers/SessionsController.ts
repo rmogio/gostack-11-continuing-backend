@@ -1,21 +1,21 @@
-import {Request, Response} from 'express'
-import {container} from 'tsyringe'
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
-import AuthenticationService from '@modules/users/services/AuthenticateService'
+import AuthenticationService from '@modules/users/services/AuthenticateService';
 
-export default class SessionsController{
-  public async create(request: Request, response: Response): Promise<Response>{
-    const {email, password} = request.body
+export default class SessionsController {
+  public async create(request: Request, response: Response): Promise<Response> {
+    const { email, password } = request.body;
 
-    const authenticateUser = container.resolve(AuthenticationService)
+    const authenticateUser = container.resolve(AuthenticationService);
 
-    const {user, token} = await authenticateUser.execute({
+    const { user, token } = await authenticateUser.execute({
       email,
-      password
-    })
+      password,
+    });
 
-    delete user.password
+    delete user.password;
 
-    return response.json({user, token})
+    return response.json({ user, token });
   }
 }
