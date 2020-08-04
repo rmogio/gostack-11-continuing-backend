@@ -29,11 +29,11 @@ class SendForgotoPasswordEmail {
       throw new AppError('This email is not registered');
     }
 
-    await this.userTokenRepository.generate(user.id);
+    const { token } = await this.userTokenRepository.generate(user.id);
 
-    this.mailProvider.sendMail(
+    await this.mailProvider.sendMail(
       email,
-      'Pedido de recuperação de senha recebido',
+      `Pedido de recuperação de senha recebido! O seu token de recuperação é: ${token}`,
     );
   }
 }
